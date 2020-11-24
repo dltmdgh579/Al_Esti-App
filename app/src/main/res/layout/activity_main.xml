@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5290A3"
+    android:background="#1D2D7B"
     tools:context=".MainActivity">
 
 
@@ -27,19 +27,22 @@
         android:id="@+id/startBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FAEB24"
         android:text="측정 시작"
+        android:textColor="#1D2D7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tempaView"
-        app:layout_constraintVertical_bias="0.331" />
+        app:layout_constraintVertical_bias="0.213" />
 
     <Button
         android:id="@+id/chauBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="대리운전"
+        android:backgroundTint="#FAEB24"
+        android:textColor="#1D2D7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.888"
@@ -52,8 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="긴급전화"
-        android:textColor="#FFFFFF"
-        android:background="@color/red"
+        android:backgroundTint="#FF0000"
+        android:textColor="#1D2D7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.888"

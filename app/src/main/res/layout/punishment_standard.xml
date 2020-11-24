@@ -1,27 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:rowCount="4"
-    android:columnCount="3"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_column="0"
-        android:layout_row="0"
-        android:text="위반횟수"
-        android:background="@drawable/backgroundline"
-        />
-    <TextView
-        android:layout_column="1"
-        android:layout_row="0"
-        android:layout_columnSpan="2"
-        android:text="처벌기준"
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="224dp"
+        android:src="@drawable/civil_liability" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="224dp"
+        android:src="@drawable/criminal_liability" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="224dp"
+        android:src="@drawable/adm_responsibility" />
+
+    <Button
+        android:id="@+id/btnReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/backgroundline"
-        />
+        android:text="돌아가기" />
 
-</GridLayout>
+</LinearLayout>

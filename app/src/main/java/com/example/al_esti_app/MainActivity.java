@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -13,6 +16,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
     TextView penalView, BAC_View;
     GradientDrawable BAC_Back;
     Socket socket = null;
+    View dialogView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("알코올 측정기");
 
         startBtn = (Button) findViewById(R.id.startBtn);
         chauBtn = (Button) findViewById(R.id.chauBtn);
@@ -40,22 +48,10 @@ public class MainActivity extends AppCompatActivity {
         BAC_View = (TextView) findViewById(R.id.tempaView);
         BAC_Back = (GradientDrawable) ContextCompat.getDrawable(this, R.drawable.oval);
 
-
-        /*.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog2, null);
-                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                dlg.setTitle("처벌");
-                dlg.setIcon(R.drawable.siren);
-                dlg.setView(dialogView);
-                dlg.setPositiveButton("확인", null);
-                dlg.show();
-            }
-        });*/
-
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BAC_View.setText("측정중...");
                 MyClientTask myClientTask = new MyClientTask();
                 myClientTask.execute();
             }
@@ -98,16 +94,19 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
-    public class MyClientTask extends AsyncTask<Void, Void, Void> {
+    public class MyClientTask extends AsyncTask<Void, String, Void> {
         String response = "";
 
         @Override
         protected Void doInBackground(Void... arg0) {
             Socket socket = null;
             try {
-                socket = new Socket("192.168.0.80", 8888);
+                socket = new Socket("172.30.1.44", 8888);
 
-                //송신 없음
+                //송신 (없음)
+                /*OutputStream out = socket.getOutputStream();
+                out.write(myMessage.getBytes());*/
+
 
                 //수신
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
@@ -118,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     byteArrayOutputStream.write(buffer, 0, bytesRead);
                     response += byteArrayOutputStream.toString("UTF-8");
+                    publishProgress(response);
+                    Thread.sleep(1000);
                 }
             } catch (UnknownHostException e) {
                 e.printStackTrace();
@@ -125,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
                 response = "IOException: " + e.toString();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             } finally {
                 if (socket != null) {
                     try {
@@ -137,13 +140,12 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
+        protected void onProgressUpdate(String... values) {
             BAC_View.setText(response);
             double k = Double.parseDouble(response);
 
             //BAC(혈중알콜농도)가 0.03을 초과하면 하게 되는 동작.
-            if(k >= 0.03) {
+            if (k >= 0.03) {
                 // BAC 표시하는 텍스트 밑에 깔린 원판(TextView - drawable) 색깔 변경.
                 Drawable roundDrawable = getResources().getDrawable(R.drawable.oval);
                 roundDrawable.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
@@ -153,12 +155,51 @@ public class MainActivity extends AppCompatActivity {
                     BAC_View.setBackground(roundDrawable);
                 }
 
-                //모터 동작 중지.
-                //대리운전 링크 연결.
+                dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog1, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                dlg.setTitle("경고");
+                dlg.setIcon(R.drawable.siren);
+                dlg.setView(dialogView);
+                dlg.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%8C%80%EB%A6%AC%EC%9A%B4%EC%A0%84"));
+                                startActivity(intent);
+                            }
+                        });
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
             }
+        }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            BAC_View.setText("음주 측정이 완료되었습니다.");
             super.onPostExecute(result);
         }
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater mInflater = getMenuInflater();
+        mInflater.inflate(R.menu.menu1, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.punishment:
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.bodychange:
+                Intent intent1 = new Intent(MainActivity.this, ThirdActivity.class);
+                startActivity(intent1);
+                return true;
+        }
+        return false;
     }
 }
-
 
