@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     BAC_View.setBackground(roundDrawable);
                 }
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(2000);
 
                 dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog1, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
@@ -169,6 +173,14 @@ public class MainActivity extends AppCompatActivity {
                         });
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
+            } else {
+                Drawable roundDrawable = getResources().getDrawable(R.drawable.oval);
+                roundDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    BAC_View.setBackgroundDrawable(roundDrawable);
+                } else {
+                    BAC_View.setBackground(roundDrawable);
+                }
             }
         }
 
