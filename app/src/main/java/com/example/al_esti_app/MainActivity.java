@@ -173,6 +173,14 @@ public class MainActivity extends AppCompatActivity {
                         });
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
+            } else {
+                Drawable roundDrawable = getResources().getDrawable(R.drawable.oval);
+                roundDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    BAC_View.setBackgroundDrawable(roundDrawable);
+                } else {
+                    BAC_View.setBackground(roundDrawable);
+                }
             }
         }
 
