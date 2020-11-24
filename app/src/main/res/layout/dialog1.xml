@@ -5,12 +5,17 @@
     android:orientation="vertical" >
 
     <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/red"
         android:text="음주 기준을 초과했습니다"
         android:textSize="20dp" />
 
     <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="대리운전 하싈?"
