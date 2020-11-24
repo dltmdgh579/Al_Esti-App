@@ -5,9 +5,11 @@
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:textSize="20dp"
         android:text="음주가 신체에 미치는 변화"/>
 
     <ImageView
@@ -30,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@android:color/transparent"
         android:text="돌아가기" />
 
 </LinearLayout>
