@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tempaView"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/chauBtn"
@@ -54,7 +54,7 @@
         android:id="@+id/emerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="존나급함"
+        android:text="긴급전화"
         android:backgroundTint="#FF0000"
         android:textColor="#1D2D7B"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -6,4 +6,15 @@
     <item
         android:id="@+id/bodychange"
         android:title="신체변화"/>
+
+    <item android:title="측정기록 >>">
+        <menu>
+            <item
+                android:id="@+id/recordAll"
+                android:title="전체기록"/>
+            <item
+                android:id="@+id/recordAlcoh"
+                android:title="음주기록"/>
+        </menu>
+    </item>
 </menu>
